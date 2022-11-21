@@ -14,7 +14,9 @@ while True:
     prediction = model.predict(data)
     cv2.imshow('frame', frame)
     # Press q to close the window
-    print(prediction)
+    prediction_argmax = np.argmax(prediction)
+    print(prediction_argmax)
+    #print(prediction)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
             
