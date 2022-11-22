@@ -1,15 +1,16 @@
 import random
+rps = ["Rock", "Paper", "Scissors"]
 #Takes list as input
-def get_user_choice(choices):
+def get_user_choice():
     user_choice = None
-    while user_choice not in choices:
+    while user_choice not in rps:
         user_choice = input("Please enter Rock, Paper, or Scissors: ").title()
     print(f"You have chosen {user_choice}.")
     return user_choice
 
 #Takes list as input
-def get_computer_choice (choices):
-    computer_choice = random.choice(choices)
+def get_computer_choice ():
+    computer_choice = random.choice(rps)
     print(f"The computer has chosen {computer_choice}.")
     return computer_choice
 
@@ -37,7 +38,6 @@ def get_winner(user_choice, computer_choice):
             print("You won!")
 
 if __name__ == '__main__':
-    rps = ["Rock", "Paper", "Scissors"]
     user_choice = get_user_choice(rps)
     computer_choice = get_computer_choice(rps)
     get_winner(user_choice, computer_choice)
