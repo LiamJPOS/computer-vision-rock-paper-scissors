@@ -15,7 +15,7 @@ def get_computer_choice ():
     return computer_choice
 
 #if-elif-else statements used for game logic
-def get_winner(user_choice, computer_choice): 
+def get_winner(computer_choice, user_choice): 
        
     if user_choice == computer_choice:
         print("It is a tie!")
