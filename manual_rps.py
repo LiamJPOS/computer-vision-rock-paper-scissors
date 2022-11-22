@@ -36,8 +36,11 @@ def get_winner(user_choice, computer_choice):
             print("You lost")
         else: 
             print("You won!")
-
-if __name__ == '__main__':
+            
+def play():
     user_choice = get_user_choice()
     computer_choice = get_computer_choice()
     get_winner(computer_choice, user_choice)
+
+if __name__ == '__main__':
+    play()
