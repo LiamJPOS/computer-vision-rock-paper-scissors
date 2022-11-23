@@ -9,6 +9,39 @@ This project takes an image classification model of the hand positions for the g
 
 - Accuracy of model to be tested. 
 
-- Each class will be used as conditions in the logic of the game
+- Each class will be used as conditions in the logic of the game.
 
+## Milestone 3
+- Librarys installed.
 
+- Model tested. (to input)
+
+## Milestone 4
+
+- Logic of game created with manual input ready for integration with OpenCV input from trained model. First iteration uses if-elif-else statements.
+
+```python
+
+def get_winner(computer_choice, user_choice): 
+       
+    if user_choice == computer_choice:
+        print("It is a tie!")
+            
+    elif user_choice == "Rock":
+        if computer_choice == "Paper":
+            print("You lost")
+        else: print("You Won!")
+        
+    elif user_choice == "Paper":
+        if computer_choice == "Scissors":
+            print("You lost")
+        else:
+            print("You won!")
+            
+    elif user_choice == "Scissors":
+        if computer_choice == "Rock":
+            print("You lost")
+        else: 
+            print("You won!")
+            
+```
