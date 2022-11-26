@@ -7,37 +7,36 @@ model = load_model('keras_model.h5')
 cap = cv2.VideoCapture(0)
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-while True: 
-    ret, frame = cap.read()
-    resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
-    image_np = np.array(resized_frame)
-    normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
-    data[0] = normalized_image
-    cv2.imshow('frame', frame)
-    # Press q to close the window
-    #print(prediction)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break 
-# After the loop release the cap object
-cap.release()
-# Destroy all the windows
-cv2.destroyAllWindows()
+def get_user_input():
+    while True: 
+        ret, frame = cap.read()
+        resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
+        image_np = np.array(resized_frame)
+        normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
+        data[0] = normalized_image
+        cv2.imshow('frame', frame)
+        # Press q to close the window
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break 
+    # After the loop release the cap object
+    cap.release()
+    # Destroy all the windows
+    cv2.destroyAllWindows()
 
 def get_prediction(model, data): 
     prediction = model.predict(data)
-    #return np.argmax(prediction)
     print(prediction)
     return prediction
-    
-user_choice = np.argmax(get_prediction(model, data))
-rps = {0: "Rock", 1: "Paper", 2:"Scissors"}
-print(rps[user_choice])
-'''
+
+def interpret_prediction(prediction):
+    interpreted_prediction = np.argmax(prediction)
+    rps = {0: "Rock", 1: "Paper", 2:"Scissors"}
+    return rps[interpreted_prediction]
+
 def get_user_choice():
-    
-    user_choice = None
-    while user_choice not in ["Rock", "Paper", "Scissors"]:
-        user_choice = rps[np.argmax(get_prediction)]
+    get_user_input()
+    prediction_array = get_prediction(model, data)
+    user_choice = interpret_prediction(prediction_array)        
     print(f"You have chosen {user_choice}.")
     return user_choice
 
@@ -76,4 +75,3 @@ def play():
 
 if __name__ == '__main__':
     play()
-'''    
