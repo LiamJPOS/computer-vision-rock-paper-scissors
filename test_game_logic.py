@@ -1,8 +1,25 @@
+
 import time
 import random
 import cv2
 from keras.models import load_model
 import numpy as np
+
+'''def oddeven(number):
+    if number %2 == 0:
+        return("even")
+    else:
+        return("odd")
+    
+while True:
+    if oddeven(303) == "even":
+        print("even")
+        break
+    else:
+        print("not even")
+        break
+
+
 
 model = load_model('\\\\wsl$\\Ubuntu-22.04\\home\\liam\\Code\\computer-vision-rock-paper-scissors\\keras_model.h5')
 cap = cv2.VideoCapture(0)
@@ -51,6 +68,13 @@ def get_user_choice():
     user_choice = interpret_prediction(prediction_array)        
     print(f"You have chosen {user_choice}.")
     return user_choice
+'''
+def get_user_choice():
+    user_choice = None
+    while user_choice not in ["Rock", "Paper", "Scissors"]:
+        user_choice = input("Please enter Rock, Paper, or Scissors: ").title()
+    print(f"You have chosen {user_choice}.")
+    return user_choice
 
 def get_computer_choice ():
     computer_choice = random.choice(["Rock", "Paper", "Scissors"])
@@ -66,26 +90,29 @@ def get_winner(computer_choice, user_choice):
             
     elif user_choice == "Rock":
         if computer_choice == "Paper":
-            print("You lost")  
+            print("You lost")
+            return("computer")
         else: 
             print("You Won!")
-            
+            return("user")
         
         
     elif user_choice == "Paper":
         if computer_choice == "Scissors":
-            print("You lost")     
+            print("You lost")
+            return("computer")
         else:
             print("You won!")
-            
+            return("user")
             
     elif user_choice == "Scissors":
         if computer_choice == "Rock":
-            print("You lost")    
+            print("You lost")
+            return("computer")
         else: 
             print("You won!")
-       
-            
+            return("user")
+        
 def play():
     user_wins = 0
     computer_wins = 0
@@ -110,6 +137,8 @@ def play():
         print("The computer has won the most rounds. You lose")
     else:
         print("You have won the most rounds. You win!")
+        
+        
 
 if __name__ == '__main__':
     play()
@@ -119,3 +148,5 @@ if __name__ == '__main__':
 
     
 
+
+     
