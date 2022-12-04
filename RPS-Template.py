@@ -1,9 +1,22 @@
 import cv2
 from keras.models import load_model
 import numpy as np
-model = load_model('\\\\wsl$\\Ubuntu-22.04\\home\\liam\\Code\\computer-vision-rock-paper-scissors\\keras_model.h5')
+model = load_model('keras_model.h5')
 cap = cv2.VideoCapture(0)
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+
+
+
+def mapper(prediction):
+    
+    class_map = {
+    0:'rock',
+    1:'paper',
+    2:'scissors',
+    3:'none'    
+    }
+    
+    return class_map[prediction]
 
 while True: 
     ret, frame = cap.read()
@@ -12,10 +25,11 @@ while True:
     normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
     data[0] = normalized_image
     prediction = model.predict(data)
+    prediction = np.argmax(prediction)
     cv2.imshow('frame', frame)
     # Press q to close the window
-    prediction_argmax = np.argmax(prediction)
-    print(prediction_argmax)
+    
+    print(mapper(prediction))
     #print(prediction)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
