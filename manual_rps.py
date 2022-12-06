@@ -1,4 +1,13 @@
 import random
+def countdown(time_sec):
+    print("Get ready! Choose Rock, Paper, or Scissors!")
+    while time_sec > 0:
+        end_time = time.time() + 1
+        time_sec -= 1
+        print(time_sec)
+        while time.time() < end_time:
+            pass
+
 
 #Takes list as input
 def get_user_choice():
@@ -38,9 +47,23 @@ def get_winner(computer_choice, user_choice):
             print("You won!")
             
 def play():
-    user_choice = get_user_choice()
-    computer_choice = get_computer_choice()
-    get_winner(computer_choice, user_choice)
+    user_wins = 0
+    computer_wins = 0
+    for i in range(5):
+        
+        if user_wins == 3 or computer_wins == 3:
+            break
+        
+        user_choice = get_user_choice()
+        computer_choice = get_computer_choice()
+        round_winner = get_winner(computer_choice, user_choice)
+        
+        if round_winner == "computer":
+            computer_wins += 1
+        elif round_winner == "user":
+            user_wins += 1
+        else:
+            pass
 
 if __name__ == '__main__':
     play()
