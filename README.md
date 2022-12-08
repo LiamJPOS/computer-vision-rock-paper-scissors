@@ -10,16 +10,25 @@ This project takes an image classification model of the hand positions for the g
 - Environment created.
 
 ## Milestone 2
-- Trained model with 4 labels "Rock", "Paper", "Scissors", and "Nothing" using 50 images for each class.
+- Trained model with 4 labels "Rock", "Paper", "Scissors", and "None" using 200 images for each class. Exported Tensorflow .h5 model and text file with labels saved with project
 
-- Accuracy of model to be tested. 
+- Images collected with a Python script utilising Opencv-Python. Teachable Machine resizes images to 244x244px so training data small enough to be kept with project files on GitHub. 
+ 
 
-- Each class will be used as conditions in the logic of the game.
+Examples of training images:
+
+| Rock | Paper | Scissors | None |
+|------|:-----:|:---------:|-----|
+![Rock](https://github.com/LiamJPOS/computer-vision-rock-paper-scissors/blob/main/image_data/rock/1.jpg?raw=true) | ![Paper](https://github.com/LiamJPOS/computer-vision-rock-paper-scissors/blob/main/image_data/paper/1.jpg?raw=true) | ![Scissors](https://github.com/LiamJPOS/computer-vision-rock-paper-scissors/blob/main/image_data/scissors/1.jpg?raw=true) | ![None](https://github.com/LiamJPOS/computer-vision-rock-paper-scissors/blob/main/image_data/none/1.jpg?raw=true)  
+ 
+ 
+Each class will be used as conditions in the logic of the game.
 
 ## Milestone 3
 - Librarys installed.
 
-- Model tested. (to input)
+- Model tested and accruacy improved to over 99% when using only region of the webcam frame as input as shown in examples.
+
 
 ## Milestone 4
 
