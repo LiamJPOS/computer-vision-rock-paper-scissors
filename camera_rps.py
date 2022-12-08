@@ -13,15 +13,17 @@ def mapper(move_code):
     }
     return class_map[move_code]
 
-def get_user_choice():
+def get_prediction():
     image_np = np.array(resized_user_frame)
     normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     data[0] = normalized_image
-    prediction_array = model.predict(data, verbose=0)
+    return model.predict(data, verbose=0)
+
+def get_user_choice():
+    prediction_array = get_prediction()
     move_code = np.argmax(prediction_array)
     return mapper(move_code)    
-
 
 def get_computer_choice ():
     computer_choice = random.choice(["rock", "paper", "scissors"])
