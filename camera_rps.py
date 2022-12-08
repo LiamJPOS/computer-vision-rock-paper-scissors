@@ -1,6 +1,6 @@
 import time
 import random
-import cv2 as cv
+import cv2
 from keras.models import load_model
 import numpy as np
 
@@ -67,20 +67,20 @@ model = load_model(model_path)
 rounds_played = 0
 
 #Open webcam in CV
-capture = cv.VideoCapture(0)
+capture = cv2.VideoCapture(0)
 while True: 
     ret, frame = capture.read()
     
     #standardize frame size
-    frame = cv.resize(frame, (640, 480), interpolation=cv.INTER_AREA) #takes (width, height)    
+    frame = cv2.resize(frame, (640, 480), interpolation=cv2.INTER_AREA) #takes (width, height)    
     #user rectangle 
-    cv.rectangle(frame, (10, 240), (214, 470), (255,255,255), thickness=2)
+    cv2.rectangle(frame, (10, 240), (214, 470), (255,255,255), thickness=2)
     #computer rectangle 
-    cv.rectangle(frame, (426, 240), (630, 470), (255,255,255), thickness=2)  
+    cv2.rectangle(frame, (426, 240), (630, 470), (255,255,255), thickness=2)  
 
     #extract and resize region in user rectangle
     user_frame = frame[244:466, 14:204] #takes [y:y+h,x:x+w]
-    resized_user_frame = cv.resize(user_frame, (224, 224), interpolation = cv.INTER_AREA)
+    resized_user_frame = cv2.resize(user_frame, (224, 224), interpolation = cv2.INTER_AREA)
 
     #predict user move
     user_choice = get_user_choice()
@@ -93,14 +93,14 @@ while True:
         get_winner(computer_choice, user_choice)
         rounds_played += 1
 
-    cv.imshow('Rock Paper Scissors', frame)
+    cv2.imshow('Rock Paper Scissors', frame)
     
-    if cv.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
     if rounds_played == 5:
         break
     
 capture.release()
-cv.destroyAllWindows
+cv2.destroyAllWindows
 
 
