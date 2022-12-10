@@ -134,4 +134,4 @@ def get_user_choice():
     print(f'You have chosen {user_choice}')
     return user_choice
 ```
-- Game completed and playable as minimum viable product. Project completed as set by AiCore, but code improvements to follow.
+-Project completed but code improvements to follow.
