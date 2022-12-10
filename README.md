@@ -1,5 +1,7 @@
-# Computer Vision RPS
+# Computer Vision Rock Paper Scissors
 This project takes an image classification model of the hand positions for the game rock paper scissors, trained using Google's Teachable Machine, that is built on Tensorflow.js (https://github.com/googlecreativelab/teachablemachine-community/), and allows the user to play rock paper scissors with their webcam. The game is coded in Python. 
+
+![Example GIF](https://public.am.files.1drv.com/y4m_glgVWDNmMORstAQZUX5FQp_k6nA3wFvgp7_9AMZVDJGkLFMauH9LnaT-tERKtoj3RUPalYshvjx-LIJI39X6F4ZFGpHQElbvd-sFHJYoY8wdnzy2YENlDihjz2FLXz5kbWAz3zrHXucJ00sqMPaSyOulaz_Kfdy6H_Jj5nlnKFRDSGCLa0Hohq9-iqWIT7DP0DvWxUXPLxjpxCBiKHqQMiV3T_L8wMyXAK4bcs87G8)
 
 ## Prerequesites
 - Python 3.8.*
@@ -59,3 +61,77 @@ def get_winner(computer_choice, user_choice):
             print("You won!")
             
 ```
+## Milestone 5
+- Added game information text overlay of the frames captured by the webcam using cv2.putText() method. 
+- Added variables to track user wins, computer wins, and rounds played. The game currently ends after a hard coded 3 user wins, 3 computer wins, or 5 rounds played. Future improvement would allow user to select these parameters.
+```python
+#Press esc to close game
+    if cv2.waitKey(1) & k == 27:
+        break
+    if user_wins == 3:
+        print('You have won the most rounds! You win!')
+        break
+    if computer_wins == 3:
+        print('The computer has won the most rounds. You lost.')
+        break
+    if rounds_played == 5:
+        if user_wins > computer_wins:
+            print('You have won the most rounds! You win!')
+        elif computer_wins > user_wins:
+            print('The computer has won the most rounds. You lost.')
+        else:
+            print('You both tied. 5 ties in a row is a 0.41\% chance!')
+        break
+```
+- Added functionality to allow user to start each round with a key press
+- Added a timer functionality that captures user input after 5 seconds. 
+```python 
+ k = cv2.waitKey(125)
+    if k == ord('q'):
+        previous_time = time.time()
+        
+        while countdown >= 0:
+            ret, frame = capture.read()
+            
+            #Display countdown on each frame
+            cv2.putText(frame, 'Choose rock, paper, or scissors', (10, 30), font, 1, (255, 255, 255), thickness=2)
+            cv2.putText(frame, str(countdown), (300, 200), font, 5, (255, 255, 255), thickness=2)
+            #user rectangle 
+            cv2.rectangle(frame, (10, 240), (214, 470), (255,255,255), thickness=2)
+            
+            cv2.imshow('Rock Paper Scissors', frame)
+            cv2.waitKey(125)
+            
+            current_time = time.time()
+            
+            if current_time - previous_time >= 1:
+                previous_time = current_time
+                countdown -= 1
+```
+- User input now read by previously trained Tensorflow model
+
+```python 
+def mapper(move_code):    
+    class_map = {
+    0:'rock',
+    1:'paper',
+    2:'scissors',
+    3:'none'    
+    }
+    return class_map[move_code]
+
+def get_prediction():
+    image_np = np.array(resized_user_frame)
+    normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
+    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    data[0] = normalized_image
+    return model.predict(data, verbose=0)
+
+def get_user_choice():
+    prediction_array = get_prediction()
+    move_code = np.argmax(prediction_array)
+    user_choice = mapper(move_code)    
+    print(f'You have chosen {user_choice}')
+    return user_choice
+```
+- Game completed and playable as minimum viable product. Project completed as set by AiCore, but code improvements to follow.
