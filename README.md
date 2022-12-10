@@ -134,4 +134,4 @@ def get_user_choice():
     print(f'You have chosen {user_choice}')
     return user_choice
 ```
--Project completed but code improvements to follow.
+- Project completed but code improvements to follow.
