@@ -1,7 +1,7 @@
 # Computer Vision Rock Paper Scissors
 This project takes an image classification model of the hand positions for the game rock paper scissors, trained using Google's Teachable Machine, that is built on Tensorflow.js (https://github.com/googlecreativelab/teachablemachine-community/), and allows the user to play rock paper scissors with their webcam. The game is coded in Python. 
 
-![Example GIF](https://public.am.files.1drv.com/y4m_glgVWDNmMORstAQZUX5FQp_k6nA3wFvgp7_9AMZVDJGkLFMauH9LnaT-tERKtoj3RUPalYshvjx-LIJI39X6F4ZFGpHQElbvd-sFHJYoY8wdnzy2YENlDihjz2FLXz5kbWAz3zrHXucJ00sqMPaSyOulaz_Kfdy6H_Jj5nlnKFRDSGCLa0Hohq9-iqWIT7DP0DvWxUXPLxjpxCBiKHqQMiV3T_L8wMyXAK4bcs87G8)
+![Example GIF](https://public.am.files.1drv.com/y4mSdJUdP7TLOmjkPKqD7wQIAkFpTFpDbc2qtk6I1Ysn94cc4O1qe5olDVvLSoV_MuRqm-2jh7eSKHE758jgNxSn5XI6LY9m-POJOEEmczFCvJkm4q8wj64zZ2g5HaBzuGQUiSDzCYXxlruphF3D6SbaLzvXSF-HgOeyoH-emDmTCEg5xx1fQCsSzwLWlOvFcC2FcmBdo-5u7xyAMCyTzY5hIDE8x8zlr9-NQnSNV-PnN4)
 
 ## Prerequesites
 - Python 3.8.*
