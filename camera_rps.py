@@ -67,6 +67,10 @@ rounds_played = 0
 user_wins = 0 
 computer_wins = 0
 countdown = 5
+font = cv2.FONT_HERSHEY_SIMPLEX
+computer_choice = 'none'
+user_choice = 'none'
+winner = 'none'
 
 #Open webcam in CV
 capture = cv2.VideoCapture(0)
@@ -79,12 +83,20 @@ while True:
     frame = cv2.resize(frame, (640, 480), interpolation=cv2.INTER_AREA) #takes (width, height)    
     #user rectangle 
     cv2.rectangle(frame, (10, 240), (214, 470), (255,255,255), thickness=2)
-    #computer rectangle 
-    cv2.rectangle(frame, (426, 240), (630, 470), (255,255,255), thickness=2)  
-    
-    cv2.putText(frame, 'Let\'s play Rock, Paper, Scissors', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), thickness=2)
-    cv2.putText(frame, 'Press Q to start the round', (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), thickness=2)
-
+    #display the information
+    cv2.putText(frame, 'Let\'s play Rock, Paper, Scissors', (10, 30), font, 1, (255, 255, 255), thickness=2)
+    cv2.putText(frame, 'Press Q to start the round', (10, 70), font, 0.7, (255, 255, 255), thickness=2)
+    cv2.putText(frame, "Your Move: " + user_choice,
+            (30, 370), font, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+    cv2.putText(frame, "Computer's Move: " + computer_choice,
+            (410, 370), font, 0.5, (255, 255, 255),2, cv2.LINE_AA)
+    cv2.putText(frame, "Winner: " + winner,
+            (250, 200), font, 0.7, (0, 0, 255), 2, cv2.LINE_AA)
+    cv2.putText(frame, "You: " + str(user_wins),
+        (10, 100), font, 0.5, (0, 0, 255), 2, cv2.LINE_AA)
+    cv2.putText(frame, "Computer: " + str(computer_wins),
+        (10, 120), font, 0.5, (0, 0, 255), 2, cv2.LINE_AA)
+            
     cv2.imshow('Rock Paper Scissors', frame)
     
     k = cv2.waitKey(125)
@@ -95,8 +107,8 @@ while True:
             ret, frame = capture.read()
             
             #Display countdown on each frame
-            cv2.putText(frame, 'Choose rock, paper, or scissors', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), thickness=2)
-            cv2.putText(frame, str(countdown), (300, 200), cv2.FONT_HERSHEY_SIMPLEX, 5, (255, 255, 255), thickness=2)
+            cv2.putText(frame, 'Choose rock, paper, or scissors', (10, 30), font, 1, (255, 255, 255), thickness=2)
+            cv2.putText(frame, str(countdown), (300, 200), font, 5, (255, 255, 255), thickness=2)
             #user rectangle 
             cv2.rectangle(frame, (10, 240), (214, 470), (255,255,255), thickness=2)
             
@@ -120,7 +132,6 @@ while True:
             
             #get the winner
             if user_choice != 'none':
-
                 computer_choice = get_computer_choice()
                 winner = get_winner(computer_choice, user_choice)
                 if winner == 'user':
@@ -130,11 +141,14 @@ while True:
                     
                 rounds_played += 1
                 
+
             else: 
                 computer_choice = 'none'
                 print('Choose rock, paper or scissors when the timer reaches 0')
         
         countdown = 5
+        #Display info        
+
         
     #Press esc to close game
     if cv2.waitKey(1) & k == 27:
