@@ -143,8 +143,9 @@ while True:
             else: 
                 computer_choice = 'none'
                 print('Choose rock, paper or scissors when the timer reaches 0')
-        
+
         countdown = 5
+
     #Press esc to close game
     if cv2.waitKey(1) & k == 27:
         break
