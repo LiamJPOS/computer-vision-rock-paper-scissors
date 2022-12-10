@@ -146,9 +146,7 @@ while True:
                 computer_choice = 'none'
                 print('Choose rock, paper or scissors when the timer reaches 0')
         
-        countdown = 5
-        #Display info        
-
+        countdown = 5    
         
     #Press esc to close game
     if cv2.waitKey(1) & k == 27:
@@ -169,8 +167,5 @@ while True:
             print('You both tied. 5 ties in a row is a 0.41\% chance!')
         break
     
-    
 capture.release()
 cv2.destroyAllWindows
-
-
