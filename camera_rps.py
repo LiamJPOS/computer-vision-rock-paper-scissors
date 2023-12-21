@@ -1,3 +1,6 @@
+#TODO
+#TODO add in frame for hand and predict from the image inside the frame.
+import time
 import cv2
 from keras.models import load_model
 import numpy as np
@@ -16,10 +19,8 @@ while True:
     prediction = model.predict(data)
     prediction_index = np.argmax(prediction)
     print (labels[prediction_index])
-    
     cv2.imshow('frame', frame)
     # Press q to close the window
-    # print()
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
             
