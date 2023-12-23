@@ -1,5 +1,5 @@
 # TODO List
-# TODO - Retrain the model, it has trouble with rock
+# TODO - Improve model with more images
 # TODO - Implement game logic and use prediction in place of text input
 # TODO - Implement a timer
 # TODO - Implement points tracker
@@ -10,6 +10,13 @@ import time
 import cv2
 from keras.models import load_model
 import numpy as np
+
+def get_prediction(resized_frame):
+    image_np = np.array(resized_frame)
+    normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
+    data[0] = normalized_image
+    prediction = model.predict(data)
+    return prediction
 
 # Load labels
 with open('labels.txt') as f:
@@ -52,11 +59,8 @@ while True:
     img = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
     resized_frame = cv2.resize(img, (224, 224), interpolation = cv2.INTER_AREA)
     
-    # Predict user move
-    image_np = np.array(resized_frame)
-    normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
-    data[0] = normalized_image
-    prediction = model.predict(data)
+    #Get Prediction
+    prediction = get_prediction(resized_frame)
     prediction_index = np.argmax(prediction)
     print (labels[prediction_index])
     
