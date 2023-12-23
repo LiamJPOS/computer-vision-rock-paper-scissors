@@ -9,7 +9,6 @@ x1, y1, x2, y2 = 408, 216, 632, 440
 
 # Calculate half-width and half-height
 half_width = (x2 - x1) // 2
-half_height = (y2 - y1) // 2
 
 # Coordinates for the computer rectangle on the left side
 new_x1 = 10  # Adjust this value for the desired distance from the left side
