@@ -1,11 +1,10 @@
 # TODO List
-# TODO - Improve model with more images
 # TODO - Implement game logic and use prediction in place of text input
 # TODO - Implement a timer
 # TODO - Implement points tracker
 
 #-----
-
+import random
 import time
 import cv2
 from keras.models import load_model
@@ -18,9 +17,18 @@ def get_prediction(resized_frame):
     prediction = model.predict(data)
     return prediction
 
+def get_user_choice():
+    prediction = get_prediction(resized_frame)
+    prediction_index = np.argmax(prediction)
+    choice = labels[prediction_index]
+    return choice
+
+def get_computer_choice():
+    return random.choice(['rock', 'paper', 'scissors'])
+
 # Load labels
 with open('labels.txt') as f:
-    labels = [label for label in f]
+    labels = [label.lower() for label in f]
     
 # Load pre-trained image recognition model
 model = load_model('keras_model.h5')
@@ -59,13 +67,13 @@ while True:
     img = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
     resized_frame = cv2.resize(img, (224, 224), interpolation = cv2.INTER_AREA)
     
-    #Get Prediction
-    prediction = get_prediction(resized_frame)
-    prediction_index = np.argmax(prediction)
-    print (labels[prediction_index])
+    #Get User Choice
+
+
+
     
     cv2.imshow('frame', frame)
-    cv2.imshow('user img', roi)
+    #cv2.imshow('user img', roi)
     
     # Press q to close the window
     if cv2.waitKey(1) & 0xFF == ord('q'):
