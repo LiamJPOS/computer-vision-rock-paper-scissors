@@ -1,3 +1,4 @@
+import time
 import cv2
 
 cap = cv2.VideoCapture(0) #default webcam channel
@@ -16,6 +17,8 @@ new_y1 = y1
 new_x2 = new_x1 + half_width * 2
 new_y2 = y2
 
+countdown_start = 0
+
 while True:
     success, img = cap.read()
     
@@ -23,7 +26,14 @@ while True:
     cv2.rectangle(img, (x1, y1), (x2, y2), (255, 255, 255), 2)
     #Computer rectangle
     cv2.rectangle(img, (new_x1, new_y1), (new_x2, new_y2), (255, 255, 255), 2)
+
     
+    if cv2.waitKey(1) & 0xFF == ord('s'):
+        countdown_start = int(time.time())
+    if int(time.time()) == countdown_start + 3:
+        print("3 seconds")
+        countdown_start = 0
+
     
     cv2.imshow("Image", img)
     cv2.waitKey(1) 

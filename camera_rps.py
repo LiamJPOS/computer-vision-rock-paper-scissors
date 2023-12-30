@@ -26,6 +26,23 @@ def get_user_choice():
 def get_computer_choice():
     return random.choice(['rock', 'paper', 'scissors'])
 
+def get_winner(computer_choice, user_choice):
+    if user_choice == computer_choice:
+        print("It is a tie!")
+    elif (user_choice == 'rock' and computer_choice == 'scissors') or \
+        (user_choice == 'paper' and computer_choice == 'rock') or \
+        (user_choice == 'scissors' and computer_choice == 'paper'):
+        print("You won!")
+    else:
+        print("You lost")
+
+def play():
+    user_choice = get_user_choice()
+    print(f"You have chosen {user_choice}.")
+    computer_choice = get_computer_choice()
+    print(f"The computer has chosen {computer_choice}.")
+    get_winner(computer_choice, user_choice)
+
 # Load labels
 with open('labels.txt') as f:
     labels = [label.lower() for label in f]
@@ -54,6 +71,9 @@ new_y2 = y2
 # Shape: (batch_size=1, height=224, width=224, channels=3)
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
+# Create count down for the game
+countdown_start = 0
+
 while True: 
     ret, frame = cap.read()
     
@@ -67,11 +87,17 @@ while True:
     img = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
     resized_frame = cv2.resize(img, (224, 224), interpolation = cv2.INTER_AREA)
     
-    #Get User Choice
-
-
-
+    #print(get_user_choice())
     
+    # Press s to start game
+    if cv2.waitKey(1) & 0xFF == ord('s'):
+        countdown_start = int(time.time())
+        print("Choose rock, paper, or scissors.")
+    if int(time.time()) == countdown_start + 3:
+        play() 
+        countdown_start = 0
+        
+
     cv2.imshow('frame', frame)
     #cv2.imshow('user img', roi)
     
