@@ -1,9 +1,3 @@
-# TODO List
-# TODO - Implement game logic and use prediction in place of text input
-# TODO - Implement a timer
-# TODO - Implement points tracker
-
-#-----
 import random
 import time
 import cv2
@@ -29,23 +23,26 @@ def get_computer_choice():
 def get_winner(computer_choice, user_choice):
     if user_choice == computer_choice:
         print("It is a tie!")
+        return 'tie'
     elif (user_choice == 'rock' and computer_choice == 'scissors') or \
         (user_choice == 'paper' and computer_choice == 'rock') or \
         (user_choice == 'scissors' and computer_choice == 'paper'):
         print("You won!")
+        return 'user'
     else:
         print("You lost")
-
+        return 'computer'
+        
 def play():
     user_choice = get_user_choice()
     print(f"You have chosen {user_choice}.")
     computer_choice = get_computer_choice()
     print(f"The computer has chosen {computer_choice}.")
-    get_winner(computer_choice, user_choice)
-
+    winner = get_winner(computer_choice, user_choice)
+    return winner
+    
 # Load labels
-with open('labels.txt') as f:
-    labels = [label.lower() for label in f]
+labels = ['rock', 'paper', 'scissors', 'nothing']
     
 # Load pre-trained image recognition model
 model = load_model('keras_model.h5')
@@ -74,6 +71,10 @@ data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 # Create count down for the game
 countdown_start = 0
 
+# Create variables to track score
+computer_wins = 0
+user_wins = 0
+
 while True: 
     ret, frame = cap.read()
     
@@ -87,16 +88,17 @@ while True:
     img = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
     resized_frame = cv2.resize(img, (224, 224), interpolation = cv2.INTER_AREA)
     
-    #print(get_user_choice())
-    
-    # Press s to start game
+    # Press s to start round
     if cv2.waitKey(1) & 0xFF == ord('s'):
         countdown_start = int(time.time())
         print("Choose rock, paper, or scissors.")
     if int(time.time()) == countdown_start + 3:
-        play() 
+        winner = play()
         countdown_start = 0
-        
+        if winner == 'user':
+            user_wins += 1
+        elif winner == 'computer':
+            computer_wins += 1
 
     cv2.imshow('frame', frame)
     #cv2.imshow('user img', roi)
@@ -104,7 +106,15 @@ while True:
     # Press q to close the window
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-            
+    
+    # End the game when user or computer get 3 points
+    if user_wins == 3:
+        print("You win the game!")
+        break
+    if computer_wins == 3:
+        print('You lose the game.')
+        break
+
 # After the loop release the cap object
 cap.release()
 # Destroy all the windows
