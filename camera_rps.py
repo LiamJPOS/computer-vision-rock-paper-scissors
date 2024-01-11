@@ -1,3 +1,11 @@
+#TODO - Add countdown text 
+#TODO - Add play again option (press c to continue)
+#TODO - add icons in computer box to show what computer has picked
+#TODO - add score text on screen
+#TODO - Create gif of finished game to add to README
+#TODO - Update README
+#TODO - Tidy up files
+
 import random
 import time
 import cv2
