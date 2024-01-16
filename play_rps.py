@@ -22,7 +22,8 @@ class Screen_square():
         cv2.rectangle(frame, (self.x1, self.y1), (self.x2, self.y2), (255, 255, 255), 2)
     
 class User_square(Screen_square):
-    def __init__(self, model=False):
+    def __init__(self, coordinates = [0,0,0,0],model=False):
+        super().__init__(coordinates)
         self.model = load_model(model)
         self.prediction_array = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     #Returns normalized image array of area in square to an np array usable in keras model
@@ -43,6 +44,9 @@ class User_square(Screen_square):
         return predicted_move
 
 class Computer_square(Screen_square):
+    def __init__(self, coordinates=[0,0,0,0]):
+        super().__init__(coordinates)
+
     def get_computer_choice(self):
         return random.choice(['rock', 'paper', 'scissors'])
     
@@ -56,15 +60,24 @@ class Rps():
         self.rounds_played = 0
         self.countdown = 0
 
-    #TODO put game logic
-    #TODO implement countdown logic here
-    def start_round(self):
-        pass
+    def get_winner(self, computer_choice, user_choice):
+        if user_choice == computer_choice:
+            print("It is a tie!")
+            return 'tie'
+        elif (user_choice == 'rock' and computer_choice == 'scissors') or \
+            (user_choice == 'paper' and computer_choice == 'rock') or \
+            (user_choice == 'scissors' and computer_choice == 'paper'):
+            print("You won!")
+            return 'user'
+        else:
+            print("You lost")
+            return 'computer'
+        
 
 cap = cv2.VideoCapture(0)
 user_square = User_square(coordinates=[408, 216, 632, 440], model="keras_model.h5")
-computer_square = Computer_square(coordinates=[10, 216, 234, 440])
-
+computer_square = Computer_square(coordinates=[10, 216, 234, 440])    
+game = Rps()
 while True:
     success, frame = cap.read()
     user_square.draw_square(frame)
@@ -72,4 +85,10 @@ while True:
     cv2.imshow('RPS', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+
+
+
+
+
 
